@@ -1,7 +1,9 @@
 package info.caq9;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -318,8 +320,9 @@ public class WeiboLogin {
 		String newLocation = callback.substring(
 				callback.lastIndexOf("location.replace"),
 				callback.lastIndexOf(';') + 1);
-		newLocation = newLocation.substring(newLocation.indexOf('"') + 1,
-				newLocation.lastIndexOf('"'));
+		System.out.println(newLocation);
+		newLocation = newLocation.substring(newLocation.indexOf('\'') + 1,
+				newLocation.lastIndexOf('\''));
 		if (DEBUG)
 			System.out.println("New location: " + newLocation);
 
@@ -357,6 +360,7 @@ public class WeiboLogin {
 					+ callbackObj.toJSONString());
 		loginObject = callbackObj;
 
+		System.out.println(result);
 		return result;
 	}
 
@@ -364,14 +368,15 @@ public class WeiboLogin {
 			ScriptException, org.apache.http.ParseException,
 			ClientProtocolException, IOException {
 		// before login, this content is a login page.
-		System.out.println(getContent(new HttpGet(
-				"http://www.weibo.com/p/100101120_40/home"), "UTF-8"));
+//		System.out.println(getContent(new HttpGet(
+//				"http://www.weibo.com/p/100101120_40/home"), "UTF-8"));
 
-		if (WeiboLogin.updateCookie("username", "password")) {
+		if (WeiboLogin.updateCookie("yourname", "yourpasswd")) {
+			BufferedWriter writer = new BufferedWriter(new FileWriter("sample.html"));
 			// after login, this content contains Weibo data
-			System.out.println(getContent(new HttpGet(
-					"http://www.weibo.com/p/100101116.331695_39.996668/home"),
-					"UTF-8"));
+			writer.append((getContent(new HttpGet(
+					"http://www.weibo.com/p/100101116.331695_39.996668/home"), "UTF-8")));
+			writer.close();
 		}
 	}
 }
