@@ -320,7 +320,6 @@ public class WeiboLogin {
 		String newLocation = callback.substring(
 				callback.lastIndexOf("location.replace"),
 				callback.lastIndexOf(';') + 1);
-		System.out.println(newLocation);
 		newLocation = newLocation.substring(newLocation.indexOf('\'') + 1,
 				newLocation.lastIndexOf('\''));
 		if (DEBUG)
@@ -360,7 +359,6 @@ public class WeiboLogin {
 					+ callbackObj.toJSONString());
 		loginObject = callbackObj;
 
-		System.out.println(result);
 		return result;
 	}
 
